@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "Camiseta de FC Barcelona Firmada",
+    "description": "Camiseta oficial del FC Barcelona firmada por los jugadores del equipo. ¡Una pieza única de colección!",
+    "code": "C1001",
+    "price": 120,
+    "status": true,
+    "stock": 10,
+    "category": "Camisetas de Fútbol"
+  },
+  {
+    "id": 2,
+    "title": "Camiseta de Real Madrid Firmada",
+    "description": "Camiseta oficial del Real Madrid firmada por los jugadores del equipo. ¡Una pieza única de colección!",
+    "code": "C1002",
+    "price": 130,
+    "status": true,
+    "stock": 8,
+    "category": "Camisetas de Fútbol"
+  },
+  {
+    "id": 3,
+    "title": "Camiseta de Boca Juniors Firmada",
+    "description": "Camiseta oficial de Boca Juniors firmada por los jugadores del equipo. ¡Una pieza única de colección!",
+    "code": "C1003",
+    "price": 110,
+    "status": true,
+    "stock": 5,
+    "category": "Camisetas de Fútbol"
+  },
+  {
+    "id": 4,
+    "title": "Camiseta de Juventus Firmada",
+    "description": "Camiseta oficial de la Juventus firmada por los jugadores.",
+    "code": "C1004",
+    "price": 140,
+    "status": true,
+    "stock": 12,
+    "category": "Camisetas de Fútbol"
+  }
+]
