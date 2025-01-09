@@ -38,5 +38,10 @@
     "status": true,
     "stock": 12,
     "category": "Camisetas de Fútbol"
+  },
+  {
+    "id": 5,
+    "title": "Camiseta de Platense",
+    "price": "95"
   }
 ]
