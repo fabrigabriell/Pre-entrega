@@ -3,46 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos en Tiempo Real</title>
-    <script src="/socket.io/socket.io.js"></script>
+    <title>Productos</title>
+    <link rel="stylesheet" href="../../public/style.css">
+</head>
+
+<body>
+    <main>
+        <h1>Productos</h1>
+
+        <div>
+            <label for="category-filter">Filtrar por categoría:</label>
+            <select id="category-filter">
+                <option value="">Todas</option>
+                <option value="Ropa">Ropa</option>
+                <option value="Zapatillas">Zapatillas</option>
+                <option value="Accesorios">Accesorios</option>
+            </select>
+
+            <label for="price-order">Ordenar por precio:</label>
+            <select id="price-order">
+                <option value="">Sin orden</option>
+                <option value="asc">Precio Ascendente</option>
+                <option value="desc">Precio Descendente</option>
+            </select>
+
+            <button id="apply-filters">Aplicar Filtros</button>
+        </div>
+
+        <ul class="product-list" id="product-list"></ul>
+
+        <div id="pagination">
+            <button id="prev-page" style="display: none;">Página Anterior</button>
+            <button id="next-page" style="display: none;">Página Siguiente</button>
+        </div>
+    </main>
+
     <script>
-        const socket = io();
-        
-        socket.on('updateProducts', (products) => {
-            const productList = document.getElementById('product-list');
-            productList.innerHTML = '';
-            products.forEach(product => {
-                const li = document.createElement('li');
-                li.textContent = `${product.title} - $${product.price}`;
-                productList.appendChild(li);
-            });
+        const cartId = '679fb1fa998bc15031195468';
+        let currentPage = 1;
+        const limit = 10;
+
+        document.getElementById('apply-filters').addEventListener('click', function() {
+            const category = document.getElementById('category-filter').value;
+            const priceOrder = document.getElementById('price-order').value;
+
+            loadProducts(category, priceOrder, currentPage);
         });
 
-        function addProduct() {
-            const title = document.getElementById('title').value;
-            const price = document.getElementById('price').value;
-            socket.emit('addProduct', { title, price });
+        document.getElementById('next-page').addEventListener('click', function() {
+            currentPage++;
+            const category = document.getElementById('category-filter').value;
+            const priceOrder = document.getElementById('price-order').value;
+            loadProducts(category, priceOrder, currentPage);
+        });
+
+        document.getElementById('prev-page').addEventListener('click', function() {
+            if (currentPage > 1) {
+                currentPage--;
+                const category = document.getElementById('category-filter').value;
+                const priceOrder = document.getElementById('price-order').value;
+                loadProducts(category, priceOrder, currentPage);
+            }
+        });
+
+        function loadProducts(category, priceOrder, page) {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = '<p>Cargando productos...</p>';
+
+            let url = `/api/products?sort=${encodeURIComponent(priceOrder)}&page=${page}&limit=${limit}`;
+            if (category && category.trim() !== '') {
+                url += `&category=${encodeURIComponent(category)}`;
+            }
+            
+            console.log('URL de la petición:', url);
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Productos recibidos:', data.payload.map(p => ({ title: p.title, price: p.price })));
+
+                    productList.innerHTML = '';
+
+                    if (!data || !Array.isArray(data.payload)) {
+                        throw new Error('Formato de respuesta inválido');
+                    }
+
+                    if (data.payload.length === 0) {
+                        productList.innerHTML = '<p>No se encontraron productos con los filtros seleccionados</p>';
+                        return;
+                    }
+
+                    data.payload.forEach(product => {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'product-item';
+                        listItem.innerHTML = `
+                            <a href="/products/${product._id}">
+                                <h2>${product.title}</h2>
+                            </a>
+                            <p>$${product.price}</p>
+                            <button class="add-to-cart" data-id="${product._id}">Agregar al carrito</button>
+                        `;
+                        productList.appendChild(listItem);
+                    });
+
+                    document.getElementById('prev-page').style.display = data.prevPage ? 'inline' : 'none';
+                    document.getElementById('next-page').style.display = data.nextPage ? 'inline' : 'none';
+
+                    attachCartEventListeners();
+                })
+                .catch(error => {
+                    console.error('Error al aplicar filtros:', error);
+                    productList.innerHTML = '<p>Error al cargar los productos. Por favor, intenta de nuevo.</p>';
+                });
         }
 
-        function deleteProduct(id) {
-            socket.emit('deleteProduct', id);
+        function attachCartEventListeners() {
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    
+                    if (!cartId) {
+                        alert('El ID del carrito no está definido.');
+                        return;
+                    }
+
+                    fetch(`/api/carts/${cartId}/products/${productId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ quantity: 1 })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.status === 'success') {
+                            alert('Producto agregado al carrito');
+                        } else {
+                            alert('Error: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        alert('Error al agregar el producto al carrito');
+                        console.error('Error:', error);
+                    });
+                });
+            });
         }
+
+        loadProducts('', '', currentPage);
     </script>
-</head>
-<body>
-    <h1>Productos en Tiempo Real</h1>
-    <ul id="product-list"></ul>
-
-    <h3>Agregar Producto</h3>
-    <input type="text" id="title" placeholder="Título" required>
-    <input type="number" id="price" placeholder="Precio" required>
-    <button onclick="addProduct()">Agregar Producto</button>
-
-    <h3>Eliminar Producto</h3>
-    <ul id="delete-list">
-        {{#each products}}
-            <li>{{title}} - ${{price}} <button onclick="deleteProduct({{id}})">Eliminar</button></li>
-        {{/each}}
-    </ul>
 </body>
 </html>

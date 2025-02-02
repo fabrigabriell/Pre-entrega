@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "title": "Camiseta de FC Barcelona Firmada",
+    "description": "Camiseta oficial del FC Barcelona firmada por los jugadores del equipo. ¡Una pieza única de colección!",
+    "code": "C1001",
+    "price": 120,
+    "status": true,
+    "stock": 10,
+    "category": "Ropa"
+  },
+  {
+    "id": 2,
+    "title": "Camiseta de Real Madrid Firmada",
+    "description": "Camiseta oficial del Real Madrid firmada por los jugadores del equipo. ¡Una pieza única de colección!",
+    "code": "C1002",
+    "price": 130,
+    "status": true,
+    "stock": 8,
+    "category": "Ropa"
+  },
+  {
+    "id": 3,
+    "title": "Camiseta de Boca Juniors Firmada",
+    "description": "Camiseta oficial de Boca Juniors firmada por los jugadores del equipo. ¡Una pieza única de colección!",
+    "code": "C1003",
+    "price": 110,
+    "status": true,
+    "stock": 5,
+    "category": "Ropa"
+  },
+  {
+    "id": 4,
+    "title": "Camiseta de Juventus Firmada",
+    "description": "Camiseta oficial de la Juventus firmada por los jugadores.",
+    "code": "C1004",
+    "price": 140,
+    "status": true,
+    "stock": 12,
+    "category": "Ropa"
+  },
+  {
+    "id": 5,
+    "title": "Camiseta de Platense",
+    "description": "Camiseta oficial de Platense.",
+    "code": "C1005",
+    "price": 95,
+    "status": true,
+    "stock": 15,
+    "category": "Ropa"
+  },
+  {
+    "id": 6,
+    "title": "Zapatillas Nike Air Max",
+    "description": "Zapatillas Nike Air Max, ideales para correr y hacer ejercicio.",
+    "code": "Z1001",
+    "price": 150,
+    "status": true,
+    "stock": 20,
+    "category": "Zapatillas"
+  },
+  {
+    "id": 7,
+    "title": "Zapatillas Adidas Ultraboost",
+    "description": "Zapatillas Adidas Ultraboost, comodidad y estilo para el día a día.",
+    "code": "Z1002",
+    "price": 160,
+    "status": true,
+    "stock": 18,
+    "category": "Zapatillas"
+  },
+  {
+    "id": 8,
+    "title": "Zapatillas Puma RS-X",
+    "description": "Zapatillas Puma RS-X, diseño moderno y cómodo.",
+    "code": "Z1003",
+    "price": 140,
+    "status": true,
+    "stock": 10,
+    "category": "Zapatillas"
+  },
+  {
+    "id": 9,
+    "title": "Zapatillas Reebok Classic",
+    "description": "Zapatillas Reebok Classic, un clásico que nunca pasa de moda.",
+    "code": "Z1004",
+    "price": 120,
+    "status": true,
+    "stock": 15,
+    "category": "Zapatillas"
+  },
+  {
+    "id": 10,
+    "title": "Gorra de Beisbol New Era",
+    "description": "Gorra de beisbol New Era, perfecta para el verano.",
+    "code": "A1001",
+    "price": 30,
+    "status": true,
+    "stock": 25,
+    "category": "Accesorios"
+  },
+  {
+    "id": 11,
+    "title": "Bufanda de lana",
+    "description": "Bufanda de lana, ideal para el invierno.",
+    "code": "A1002",
+    "price": 25,
+    "status": true,
+    "stock": 30,
+    "category": "Accesorios"
+  },
+  {
+    "id": 12,
+    "title": "Reloj de pulsera Casio",
+    "description": "Reloj de pulsera Casio, un clásico atemporal.",
+    "code": "A1003",
+    "price": 50,
+    "status": true,
+    "stock": 20,
+    "category": "Accesorios"
+  },
+  {
+    "id": 13,
+    "title": "Cinturón de Cuero",
+    "description": "Cinturón de cuero genuino, elegante y duradero.",
+    "code": "A1004",
+    "price": 45,
+    "status": true,
+    "stock": 15,
+    "category": "Accesorios"
+  }
+]

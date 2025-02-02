@@ -3,15 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Productos</title>
+    <title>Tienda</title>
+    <link rel="stylesheet" href="../../../public/style.css">
 </head>
 <body>
-    <h1>Lista de Productos</h1>
-    <ul>
-        {{#each products}}
-            <li>{{title}} - ${{price}}</li>
-        {{/each}}
-    </ul>
-    <a href="/realtimeproducts">Ver Productos en Tiempo Real</a>
+
+    <header>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/realTimeProducts">Productos</a>
+            <a href="/carts/679fb1fa998bc15031195468">Ver Carrito</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Bienvenido a la Tienda</h1>
+
+        <h2>Productos</h2>
+        <ul>
+            {{#each products}}
+                <li>
+                    {{this.title}} - ${{this.price}}
+                    <button class="add-to-cart" data-id="{{this._id}}">Agregar al Carrito</button>
+                </li>
+            {{/each}}
+        </ul>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Mi Tienda</p>
+    </footer>
+
+    <script>
+        const cartId = '679fb1fa998bc15031195468';
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const productId = event.target.getAttribute('data-id');
+                const quantity = 1; // Puedes cambiar la cantidad según sea necesario
+
+                try {
+                    const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ quantity })
+                    });
+
+                    const data = await response.json();
+                    if (data.status === 'success') {
+                        console.log('Producto agregado al carrito:', data.cart);
+                    } else {
+                        console.error('Error al agregar el producto:', data.message);
+                    }
+                } catch (error) {
+                    console.error('Error en la solicitud:', error);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
