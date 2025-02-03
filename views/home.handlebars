@@ -40,7 +40,7 @@
         document.querySelectorAll('.add-to-cart').forEach(button => {
             button.addEventListener('click', async (event) => {
                 const productId = event.target.getAttribute('data-id');
-                const quantity = 1; // Puedes cambiar la cantidad según sea necesario
+                const quantity = 1;
 
                 try {
                     const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
