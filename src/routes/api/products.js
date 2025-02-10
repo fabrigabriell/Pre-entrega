@@ -13,12 +13,12 @@ router.get('/', async (req, res) => {
 
         console.log('Filtros aplicados:', filters);
 
-        const sortOption = sort === 'desc' ? -1 : 1;
+        const sortOption = sort === 'desc' ? { price: -1 } : { price: 1 };
 
         const products = await Product.find(filters)
             .limit(Number(limit))
             .skip((page - 1) * limit)
-            .sort({ price: sortOption });
+            .sort(sortOption);
 
         const totalProducts = await Product.countDocuments(filters);
         const totalPages = Math.ceil(totalProducts / limit);
@@ -37,8 +37,24 @@ router.get('/', async (req, res) => {
         });
     } catch (err) {
         console.error('Error al obtener productos:', err);
-        res.status(500).send('Error al obtener productos');
+        res.status(500).json({ status: 'error', message: 'Error al obtener productos' });
     }
 });
 
+router.post('/', async (req, res) => {
+    try {
+        const { title, description, code, price, stock, category } = req.body;
+
+        if (!title || !description || !code || !price || !stock || !category) {
+            return res.status(400).json({ status: 'error', message: 'Todos los campos son requeridos' });
+        }
+
+        const newProduct = new Product(req.body);
+        await newProduct.save();
+        res.status(201).json({ status: 'success', payload: newProduct });
+    } catch (err) {
+        console.error('Error al crear producto:', err);
+        res.status(500).json({ status: 'error', message: 'Error al crear producto' });
+    }
+});
 module.exports = router;

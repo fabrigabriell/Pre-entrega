@@ -38,8 +38,6 @@ app.get('/realTimeProducts', async (req, res) => {
 
 app.get('/api/products', async (req, res) => {
     const { category, order } = req.query;
-    console.log('Query recibido:', { category, order });
-    
     let query = {};
 
     if (category && category !== '') {
@@ -54,12 +52,8 @@ app.get('/api/products', async (req, res) => {
             sortOption = { price: -1 };
         }
 
-        console.log('Sort option:', sortOption);
-
         let products = await Product.find(query).sort(sortOption);
         
-        console.log('Productos ordenados:', products.map(p => ({ title: p.title, price: p.price })));
-
         res.json({
             status: 'success',
             payload: products,
@@ -77,7 +71,7 @@ app.get('/api/products', async (req, res) => {
     }
 });
 
-mongoose.connect('mongodb://127.0.0.1:27017/mi-tienda', {
+mongoose.connect('mongodb+srv://Fabrigabriell:Fabri22002372@fabrigabriell.yc2nn.mongodb.net/?retryWrites=true&w=majority&appName=Fabrigabriell', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
@@ -95,7 +89,6 @@ const io = new Server(server);
 const loadProductos = async () => {
     try {
         const productos = await Product.find();
-        console.log('Productos cargados:', productos);
         return productos;
     } catch (err) {
         console.error('Error al cargar los productos:', err);
@@ -108,12 +101,8 @@ io.on('connection', (socket) => {
 
     socket.on('addProduct', async (newProduct) => {
         try {
-            console.log('Producto recibido para agregar:', newProduct);
             const productToAdd = new Product(newProduct);
             await productToAdd.save();
-    
-            console.log('Producto agregado:', productToAdd);
-    
             const productos = await loadProductos();
             io.emit('updateProducts', productos);
         } catch (err) {

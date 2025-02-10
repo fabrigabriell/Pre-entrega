@@ -12,7 +12,7 @@
         <nav>
             <a href="/">Inicio</a>
             <a href="/realTimeProducts">Productos</a>
-            <a href="/carts/679fb1fa998bc15031195468">Ver Carrito</a>
+            <a href="/carts/67aa7322af9ae8ec6203fed4">Ver Carrito</a>
         </nav>
     </header>
 
@@ -35,7 +35,7 @@
     </footer>
 
     <script>
-        const cartId = '679fb1fa998bc15031195468';
+        const cartId = '67aa7322af9ae8ec6203fed4';
 
         document.querySelectorAll('.add-to-cart').forEach(button => {
             button.addEventListener('click', async (event) => {
@@ -54,6 +54,7 @@
                     const data = await response.json();
                     if (data.status === 'success') {
                         console.log('Producto agregado al carrito:', data.cart);
+                        alert('Producto agregado al carrito!');
                     } else {
                         console.error('Error al agregar el producto:', data.message);
                     }

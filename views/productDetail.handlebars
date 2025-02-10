@@ -20,7 +20,10 @@
     <script>
         document.querySelector('.add-to-cart').addEventListener('click', function() {
             const productId = this.getAttribute('data-id');
-            const cartId = '679fb1fa998bc15031195468';
+            const cartId = '67aa7322af9ae8ec6203fed4';
+            
+            console.log('ID del producto:', productId);
+            console.log(`Enviando solicitud a: /api/carts/${cartId}/products/${productId}`);
 
             fetch(`/api/carts/${cartId}/products/${productId}`, { 
                 method: 'POST',

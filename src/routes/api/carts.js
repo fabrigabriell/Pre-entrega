@@ -85,6 +85,8 @@ router.put('/:cid/products/:pid', async (req, res) => {
             });
         }
 
+        cart.total = cart.products.reduce((acc, item) => acc + item.productTotal, 0);
+
         await cart.save();
         res.json({ status: 'success', payload: cart });
     } catch (err) {

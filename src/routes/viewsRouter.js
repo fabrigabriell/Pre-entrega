@@ -109,7 +109,7 @@ router.get('/products/:pid', async (req, res) => {
 });
 
 router.get('/carts', (req, res) => {
-    res.redirect(`/carts/679fb1fa998bc15031195468`);
+    res.redirect(`/carts/67aa7322af9ae8ec6203fed4`);
 });
 
 router.get('/carts/:cid', async (req, res) => {
